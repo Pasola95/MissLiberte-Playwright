@@ -7,7 +7,8 @@ def test_popup_close(page: Page):
     page.goto("https://missliberte.com/")
 
     # Click on 'close' button
-    news_close_button = page.locator('//span[@class="ic-close close-modal"]')
-    news_close_button.click()
+    checkbox = (page.locator("//input[@name='your-acceptance']"))
+    checkbox.check()
 
     time.sleep(2)
+
