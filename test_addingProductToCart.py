@@ -25,5 +25,5 @@ def test_add_product_to_cart(page: Page, product_url: str):
     # 5. Check that product is added to cart
     product_in_cart = "//a[contains(text(),'Top shape z bawełny organicznej | Léopard – S')]"
     expect(page.locator(product_in_cart)).to_be_visible()
-    expect(page.locator(product_in_cart)).to_have_text("Top shape z bawełny organicznej | Léopard – L")
+    expect(page.locator(product_in_cart)).to_have_text("Top shape z bawełny organicznej | Léopard – S")
 
