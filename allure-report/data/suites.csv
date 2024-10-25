@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","7696","test_add_product_to_cart[chromium-https://missliberte.com/produkt/top-shape-z-bawelny-organicznej-leopard]","","Fri Oct 25 16:55:24 EEST 2024","passed","Fri Oct 25 16:55:31 EEST 2024","","test_addingProductToCart","",""
+"","3225","test_popup_close[chromium]","","Fri Oct 25 16:55:32 EEST 2024","passed","Fri Oct 25 16:55:35 EEST 2024","","test_example1","",""
+"","3019","test_popup_close[chromium]","","Fri Oct 25 16:55:35 EEST 2024","passed","Fri Oct 25 16:55:38 EEST 2024","","test_example2","",""
