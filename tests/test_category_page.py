@@ -1,43 +1,47 @@
-from config import BASE_URL
+from playwright.sync_api import expect
+from conftest import BASE_URL
+from pages.category_page import CategoryPage
+from pages.home_page import NewsletterPopup
 
 
-def test_category_opening(page):
+def test_main_categories_opening(page):
+    newsletter_popup = NewsletterPopup(page)
+    category_page = CategoryPage(page)
 
-    # Open main page
-    from config import BASE_URL
-    page.locator(".close-btn-block > .ic-close").dblclick()
-    page.goto("https://missliberte-new.ffflabel-dev.com/shop-collection/")
-    page.get_by_role("link", name="Swim", exact=True).click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/miss-liberte-swim/")
-    page.get_by_role("link", name="Bielizna").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/bielizna/")
-    page.get_by_role("link", name="Biustonosze").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/biustonosze/")
-    page.get_by_role("link", name="Majtki").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/majtki/")
-    page.get_by_role("link", name="Body").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/body/")
-    page.get_by_role("link", name="Homewear").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/homewear/")
-    page.get_by_role("link", name="Sale").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/sale/")
-    page.get_by_role("link", name="Karty podarunkowe").click()
-    page.get_by_role("link", name="Last Pieces").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/kategoria-produktu/last-pieces/")
-    page.locator("#menu-item-22251").get_by_role("link", name="Kontakt").click()
-    page.get_by_role("link", name="Dobierz rozmiar").click()
-    page.get_by_role("link", name="Dostawy i płatności").dblclick()
-    page.goto("https://missliberte-new.ffflabel-dev.com/dostawa-i-platnosci/")
-    page.get_by_role("link", name="Wymiany i zwroty").click()
-    page.get_by_role("link", name="Jak kupić na prezent").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/na-prezent/")
-    page.locator("#menu-item-23012").get_by_role("link", name="O Miss Liberté").click()
-    page.goto("https://missliberte-new.ffflabel-dev.com/o-nas/")
-    page.locator("#menu-item-22031").get_by_role("link", name="Zrównoważona produkcja").dblclick()
-    page.goto("https://missliberte-new.ffflabel-dev.com/zrownowazona-produkcja/")
-    page.locator("#menu-item-22032").get_by_role("link", name="Współpraca").click()
-    page.get_by_role("link", name="MISS LIBERTÉ • Oficjalny").dblclick()
-    page.goto("https://missliberte-new.ffflabel-dev.com/")
+    # Open main page and close newsletter popup
+    page.goto(BASE_URL)
+    newsletter_popup.click_close_popup_button()
+    expect(page.locator(newsletter_popup.popup_is_visible_locator)).not_to_be_visible()
 
-    # Open
+    # Open Main categories
+    category_page.open_category("WSZYSTKIE", "/shop-collection/")
+    category_page.open_category("Swim", "/kategoria-produktu/miss-liberte-swim/")
+    category_page.open_category("Bielizna", "/kategoria-produktu/bielizna/")
+    category_page.open_category("Biustonosze", "/kategoria-produktu/biustonosze/")
+    category_page.open_category("Majtki", "/kategoria-produktu/majtki/")
+    category_page.open_category("Body", "/kategoria-produktu/body/")
+    category_page.open_category("Homewear", "/kategoria-produktu/homewear/")
+    category_page.open_category("Sale", "/kategoria-produktu/sale/")
+    category_page.open_category("Karty podarunkowe", "/karta-podarunkowa/")
+    category_page.open_category("Last Pieces", "/kategoria-produktu/last-pieces/")
+
+
+def test_sub_categories_openings(page):
+    newsletter_popup = NewsletterPopup(page)
+    category_page = CategoryPage(page)
+
+    # Open main page and close newsletter popup
+    page.goto(BASE_URL)
+    newsletter_popup.click_close_popup_button()
+    expect(page.locator(newsletter_popup.popup_is_visible_locator)).not_to_be_visible()
+
+    # Open Sub categories
+    category_page.open_sub_category("Kontakt", "/kontakt/")
+    category_page.open_sub_category("Dobierz rozmiar", "/dobierz-rozmiar/")
+    category_page.open_sub_category("Dostawy i płatności", "/dostawa-i-platnosci/")
+    category_page.open_sub_category("Wymiany i zwroty", "/wymiana-i-zwrot/")
+    category_page.open_sub_category("Jak kupić na prezent", "/na-prezent/")
+    category_page.open_sub_category("O Miss Liberté", "/o-nas/")
+    category_page.open_sub_category("Zrównoważona produkcja", "/zrownowazona-produkcja/")
+    category_page.open_sub_category("Współpraca", "/wspolpraca/")
 

@@ -2,7 +2,6 @@ import random
 from pages.base_page import BasePage
 
 
-
 class NewsletterPopup(BasePage):
     # Locators
     random = random.randint(10000, 99999)
@@ -16,7 +15,7 @@ class NewsletterPopup(BasePage):
     close_popup_locator = "//span[@class='ic-close close-modal']"
     open_popup_locator = "//div[@class='container header-bar--container']"
 
-    def subscribe_to_newsletter(self, username="Test", email=f"pasola.test{random}@yopmail.com", button="ZAPISZ SIĘ"):
+    def subscribe_to_newsletter(self, username="Jon", email=f"pasola.test{random}@gmail.com", button="ZAPISZ SIĘ"):
         self.page.locator(self.username_input_locator).fill(username)
         self.page.locator(self.email_input_locator).fill(email)
         self.page.locator(self.policy_checkbox_locator).check()
@@ -24,3 +23,4 @@ class NewsletterPopup(BasePage):
 
     def click_close_popup_button(self):
         self.page.locator(self.close_popup_locator).click()
+
