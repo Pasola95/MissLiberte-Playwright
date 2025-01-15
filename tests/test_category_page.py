@@ -1,47 +1,64 @@
 from playwright.sync_api import expect
-from conftest import BASE_URL
+
+from config import TEST_CAT
 from pages.category_page import CategoryPage
-from pages.home_page import NewsletterPopup
 
 
-def test_main_categories_opening(page):
-    newsletter_popup = NewsletterPopup(page)
-    category_page = CategoryPage(page)
+def test_filtering_by_size(page):
+    category = CategoryPage(page)
 
-    # Open main page and close newsletter popup
-    page.goto(BASE_URL)
-    newsletter_popup.click_close_popup_button()
-    expect(page.locator(newsletter_popup.popup_is_visible_locator)).not_to_be_visible()
+    # Open Test category and check that both product are visible
+    page.goto(TEST_CAT)
+    category.is_product_visible("TEST PRODUCT 1")
+    category.is_product_visible("TEST PRODUCT 2")
 
-    # Open Main categories
-    category_page.open_category("WSZYSTKIE", "/shop-collection/")
-    category_page.open_category("Swim", "/kategoria-produktu/miss-liberte-swim/")
-    category_page.open_category("Bielizna", "/kategoria-produktu/bielizna/")
-    category_page.open_category("Biustonosze", "/kategoria-produktu/biustonosze/")
-    category_page.open_category("Majtki", "/kategoria-produktu/majtki/")
-    category_page.open_category("Body", "/kategoria-produktu/body/")
-    category_page.open_category("Homewear", "/kategoria-produktu/homewear/")
-    category_page.open_category("Sale", "/kategoria-produktu/sale/")
-    category_page.open_category("Karty podarunkowe", "/karta-podarunkowa/")
-    category_page.open_category("Last Pieces", "/kategoria-produktu/last-pieces/")
+    # Select "S" size in filters
+    category.expan_filter("1")
+    category.select_filter("S")
+
+    # Check that only Product with S size is selected
+    category.is_product_visible("TEST PRODUCT 1")
+    category.is_product_not_visible("TEST PRODUCT 2")
 
 
-def test_sub_categories_openings(page):
-    newsletter_popup = NewsletterPopup(page)
-    category_page = CategoryPage(page)
+def test_filtering_by_color(page):
+    category = CategoryPage(page)
 
-    # Open main page and close newsletter popup
-    page.goto(BASE_URL)
-    newsletter_popup.click_close_popup_button()
-    expect(page.locator(newsletter_popup.popup_is_visible_locator)).not_to_be_visible()
+    # Open Test category and check that both product are visible
+    page.goto(TEST_CAT)
+    category.is_product_visible("TEST PRODUCT 1")
+    category.is_product_visible("TEST PRODUCT 2")
 
-    # Open Sub categories
-    category_page.open_sub_category("Kontakt", "/kontakt/")
-    category_page.open_sub_category("Dobierz rozmiar", "/dobierz-rozmiar/")
-    category_page.open_sub_category("Dostawy i płatności", "/dostawa-i-platnosci/")
-    category_page.open_sub_category("Wymiany i zwroty", "/wymiana-i-zwrot/")
-    category_page.open_sub_category("Jak kupić na prezent", "/na-prezent/")
-    category_page.open_sub_category("O Miss Liberté", "/o-nas/")
-    category_page.open_sub_category("Zrównoważona produkcja", "/zrownowazona-produkcja/")
-    category_page.open_sub_category("Współpraca", "/wspolpraca/")
+    # Select "Black" color in filters
+    category.expan_filter("2")
+    category.select_filter("Czarny")
+
+    # Check that only Product with S size is selected
+    category.is_product_visible("TEST PRODUCT 2")
+    category.is_product_not_visible("TEST PRODUCT 1")
+
+
+def test_filter_resetting(page):
+    category = CategoryPage(page)
+
+    # Open Test category
+    page.goto(TEST_CAT)
+
+    # Check "Reset filter" button is not visible by default
+    expect(page.locator(category.reset_filters)).not_to_be_visible()
+
+    # Select any filter and check that
+    category.select_filter("Biały")
+    expect(page.locator(category.reset_filters)).to_be_visible(timeout=20000)
+
+    # Click on "Reset filter" button
+    page.locator(category.reset_filters).click()
+    expect(page.locator(category.reset_filters)).not_to_be_visible()
+
+
+
+
+
+
+
 
